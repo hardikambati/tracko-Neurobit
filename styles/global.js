@@ -176,6 +176,7 @@ export const globalStyles = StyleSheet.create({
         marginTop: 15,
     },
     singleButton: {
-        marginTop: 5
+        marginTop: 10,
+        width: 200
     },
 });

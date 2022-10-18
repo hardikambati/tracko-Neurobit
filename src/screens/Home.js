@@ -1,14 +1,33 @@
 import React, { useState } from "react";
-import { Button, Text, TextInput, View, Modal, Image, TouchableOpacity } from 'react-native';
+import { Button, Text, TextInput, View, Modal, Image, TouchableOpacity, Alert } from 'react-native';
 import { globalStyles } from '../../styles/global';
 import AwesomeButton from "react-native-really-awesome-button";
 import DatePicker from "expo-datepicker";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { AuthContext } from '../context/AuthContext';
 
 export default function Home({navigation}) {
 
+    const { track, addTaskContext, deleteTaskContext } = React.useContext(AuthContext);
+
     const [modalVisible, setModalVisible] = useState(false);
+    
+    const [description, setDescription] = useState("");
+    const [amount, setAmount] = useState("");
     const [date, setDate] = useState(new Date().toString());
+
+
+    function addTaskEvent(category) {
+        if(amount === 0 || description === '') {
+            return;
+        }
+
+        addTaskContext(description, amount, category);
+        setModalVisible(!modalVisible)
+
+        setDescription('');
+        setAmount('0');
+    }
 
 
     return (
@@ -48,17 +67,26 @@ export default function Home({navigation}) {
             <View style={globalStyles.TodayTag}>
                 <View style={globalStyles.homeContainer2}>
                     <Text style={globalStyles.TodayFont}>Today</Text>
-                    <View style={globalStyles.homeList}>
-                        <Text style={globalStyles.font5}>Car-Tyre</Text>
-                        <View style={{display: 'flex', flexDirection: 'row'}}>
-                            <Text style={globalStyles.font6R}>$ 100</Text>
-                            <TouchableOpacity activeOpacity={0.5} style={globalStyles.del}>
-                                <MaterialCommunityIcons name="delete" color={'#a3a3a3'} size={18} />
-                            </TouchableOpacity>
-                        </View>
-                    </View>
 
-                    <View style={globalStyles.homeList}>
+                    {track.map((item) => 
+
+                        <View style={globalStyles.homeList} key={ item.id }>
+                            <Text style={globalStyles.font5}>{ item.description }</Text>
+                            <View style={{display: 'flex', flexDirection: 'row'}}>
+                                <Text style={item.category === "income" ? globalStyles.font6G : globalStyles.font6R}>
+                                    $ { item.amount }
+                                </Text>
+                                <TouchableOpacity activeOpacity={0.5} style={globalStyles.del}
+                                    onPress={() => deleteTaskContext(item.id)}
+                                    >
+                                    <MaterialCommunityIcons name="delete" color={'#a3a3a3'} size={18} />
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                    
+                    )}
+
+                    {/* <View style={globalStyles.homeList}>
                         <Text style={globalStyles.font5}>Dividends</Text>
                         <View style={{display: 'flex', flexDirection: 'row'}}>
                             <Text style={globalStyles.font6G}>$ 100</Text>
@@ -66,11 +94,10 @@ export default function Home({navigation}) {
                                 <MaterialCommunityIcons name="delete" color={'#a3a3a3'} size={18} />
                             </TouchableOpacity>
                         </View>
-                    </View>
+                    </View> */}
+
                 </View>
             </View>
-
-
 
         {/* MODAL STARTS */}
             <Modal
@@ -87,66 +114,36 @@ export default function Home({navigation}) {
                             style={globalStyles.inputBox}
                             variant="outline"
                             placeholder="Description"
+                            onChangeText = {text => setDescription(text)}
+                            defaultValue={description}
+                            value = {description}
                         />
 
                         <TextInput
                             style={globalStyles.inputBox}
                             variant="outline"
                             placeholder="Amount"
+                            onChangeText = {text => setAmount(text)}
+                            defaultValue={amount}
+                            value = {amount}
                         />
 
-                        <DatePicker
+                        {/* <DatePicker
                             date={date}
                             onChange={(date) => setDate(date)}
-                        />
+                        /> */}
 
                         <View style={globalStyles.modalButtons}>
                             <View style={globalStyles.singleButton}>
-                                <AwesomeButton
-                                    textColor='white'
-                                    backgroundColor='black'
-                                    backgroundShadow='#DDDDDD'
-                                    backgroundDarker='#E0EAFC'
-                                    raiseLevel={2}
-                                    borderRadius={30}
-                                    width={200}
-                                    height={50}
-                                    onPress={() => setModalVisible(!modalVisible)}
-                                >
-                                    Income +
-                                </AwesomeButton> 
+                                <Button title="Income +" color="black" onPress={() => addTaskEvent('income')} />
                             </View>
 
                             <View style={globalStyles.singleButton}>
-                                <AwesomeButton
-                                    textColor='white'
-                                    backgroundColor='black'
-                                    backgroundShadow='#DDDDDD'
-                                    backgroundDarker='#E0EAFC'
-                                    raiseLevel={2}
-                                    borderRadius={30}
-                                    width={200}
-                                    height={50}
-                                    onPress={() => setModalVisible(!modalVisible)}
-                                >
-                                    Expense -
-                                </AwesomeButton> 
+                                <Button title="Expense -" color="black" onPress={() => addTaskEvent('expense')} />
                             </View>
 
                             <View style={globalStyles.singleButton}>
-                                <AwesomeButton
-                                    textColor='white'
-                                    backgroundColor='black'
-                                    backgroundShadow='#DDDDDD'
-                                    backgroundDarker='#E0EAFC'
-                                    raiseLevel={2}
-                                    borderRadius={30}
-                                    width={200}
-                                    height={50}
-                                    onPress={() => setModalVisible(!modalVisible)}
-                                >
-                                    Cancel
-                                </AwesomeButton> 
+                                <Button title="Cancel" color="black" onPress={() => setModalVisible(!modalVisible)} />
                             </View>
                         </View>
 
@@ -154,6 +151,7 @@ export default function Home({navigation}) {
                 </View>
 
             </Modal>
+            
         {/* MODAL ENDS */}
 
 
