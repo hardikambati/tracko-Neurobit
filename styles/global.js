@@ -111,6 +111,7 @@ export const globalStyles = StyleSheet.create({
     },
     homeContainer2: {
         marginTop: 10,
+        height: 400,
         padding: 20,
         borderRadius: 15,
         backgroundColor: '#f7f7f7',
@@ -175,8 +176,32 @@ export const globalStyles = StyleSheet.create({
     modalButtons: {
         marginTop: 15,
     },
-    singleButton: {
+    modalSingleButton: {
+        display: 'flex',
+        alignItems: 'center',
         marginTop: 10,
-        width: 200
+        elevation: 8,
+        backgroundColor: "black",
+        borderRadius: 25,
+        paddingVertical: 14,
+        paddingHorizontal: 50,
     },
+    modalText: {
+        color: 'white',
+        fontSize: 14,
+        fontWeight: 'bold',
+        letterSpacing: 0.6,
+    },
+    modalTextG: {
+        color: '#00bd09',
+        fontSize: 14,
+        fontWeight: 'bold',
+        letterSpacing: 0.6,
+    },
+    modalTextR: {
+        color: '#ff6b7f',
+        fontSize: 14,
+        fontWeight: 'bold',
+        letterSpacing: 0.6,
+    }
 });

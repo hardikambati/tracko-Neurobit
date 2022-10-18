@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Text, TextInput, View, Modal, Image, TouchableOpacity, Alert } from 'react-native';
+import { Button, Text, TextInput, View, Modal, Image, TouchableOpacity, Alert, ScrollView } from 'react-native';
 import { globalStyles } from '../../styles/global';
 import AwesomeButton from "react-native-really-awesome-button";
 import DatePicker from "expo-datepicker";
@@ -13,7 +13,7 @@ export default function Home({navigation}) {
     const [modalVisible, setModalVisible] = useState(false);
     
     const [description, setDescription] = useState("");
-    const [amount, setAmount] = useState("");
+    const [amount, setAmount] = useState('');
     const [date, setDate] = useState(new Date().toString());
 
 
@@ -67,24 +67,25 @@ export default function Home({navigation}) {
             <View style={globalStyles.TodayTag}>
                 <View style={globalStyles.homeContainer2}>
                     <Text style={globalStyles.TodayFont}>Today</Text>
+                    <ScrollView showsVerticalScrollIndicator={false}>
 
-                    {track.map((item) => 
+                        {track && track.map((item) => 
 
-                        <View style={globalStyles.homeList} key={ item.id }>
-                            <Text style={globalStyles.font5}>{ item.description }</Text>
-                            <View style={{display: 'flex', flexDirection: 'row'}}>
-                                <Text style={item.category === "income" ? globalStyles.font6G : globalStyles.font6R}>
-                                    $ { item.amount }
-                                </Text>
-                                <TouchableOpacity activeOpacity={0.5} style={globalStyles.del}
-                                    onPress={() => deleteTaskContext(item.id)}
-                                    >
-                                    <MaterialCommunityIcons name="delete" color={'#a3a3a3'} size={18} />
-                                </TouchableOpacity>
+                            <View style={globalStyles.homeList} key={ item.id }>
+                                <Text style={globalStyles.font5}>{ item.description }</Text>
+                                <View style={{display: 'flex', flexDirection: 'row'}}>
+                                    <Text style={item.category === "income" ? globalStyles.font6G : globalStyles.font6R}>
+                                        $ { item.amount }
+                                    </Text>
+                                    <TouchableOpacity activeOpacity={0.5} style={globalStyles.del}
+                                        onPress={() => deleteTaskContext(item.id)}
+                                        >
+                                        <MaterialCommunityIcons name="delete" color={'#a3a3a3'} size={18} />
+                                    </TouchableOpacity>
+                                </View>
                             </View>
-                        </View>
-                    
-                    )}
+                        
+                        )}
 
                     {/* <View style={globalStyles.homeList}>
                         <Text style={globalStyles.font5}>Dividends</Text>
@@ -96,10 +97,13 @@ export default function Home({navigation}) {
                         </View>
                     </View> */}
 
+                </ScrollView>
                 </View>
+
             </View>
 
         {/* MODAL STARTS */}
+
             <Modal
                 animationType="slide"
                 visible={modalVisible}
@@ -117,6 +121,7 @@ export default function Home({navigation}) {
                             onChangeText = {text => setDescription(text)}
                             defaultValue={description}
                             value = {description}
+                            autoFocus={true}
                         />
 
                         <TextInput
@@ -134,24 +139,31 @@ export default function Home({navigation}) {
                         /> */}
 
                         <View style={globalStyles.modalButtons}>
-                            <View style={globalStyles.singleButton}>
-                                <Button title="Income +" color="black" onPress={() => addTaskEvent('income')} />
-                            </View>
+                            <TouchableOpacity activeOpacity={0.8} style={globalStyles.modalSingleButton}
+                                    onPress={() => addTaskEvent('income')}
+                                    >
+                                    <Text style={globalStyles.modalTextG}>Income</Text>
+                            </TouchableOpacity>
 
-                            <View style={globalStyles.singleButton}>
-                                <Button title="Expense -" color="black" onPress={() => addTaskEvent('expense')} />
-                            </View>
+                            <TouchableOpacity activeOpacity={0.8} style={globalStyles.modalSingleButton}
+                                    onPress={() => addTaskEvent('expense')}
+                                    >
+                                    <Text style={globalStyles.modalTextR}>Expense</Text>
+                            </TouchableOpacity>
 
-                            <View style={globalStyles.singleButton}>
-                                <Button title="Cancel" color="black" onPress={() => setModalVisible(!modalVisible)} />
-                            </View>
+                            <TouchableOpacity activeOpacity={0.8} style={globalStyles.modalSingleButton}
+                                    onPress={() => setModalVisible(!modalVisible)}
+                                    >
+                                    <Text style={globalStyles.modalText}>Cancel</Text>
+                            </TouchableOpacity>
+
                         </View>
 
                     </View>
                 </View>
 
             </Modal>
-            
+
         {/* MODAL ENDS */}
 
 
