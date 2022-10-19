@@ -22,7 +22,8 @@
     "react-native-datetimepicker-update": "^2.3.2",
     "react-native-modal-datetime-picker": "^14.0.0",
     "react-native-really-awesome-button": "^2.0.0",
-    "react-native-vector-icons": "^9.2.0"
+    "react-native-vector-icons": "^9.2.0",
+    "expo-updates": "~0.14.6"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"
