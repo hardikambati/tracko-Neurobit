@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Text, TextInput, View, Modal, Image, TouchableOpacity, Alert, ScrollView } from 'react-native';
 import { globalStyles } from '../../styles/global';
 import AwesomeButton from "react-native-really-awesome-button";
@@ -14,7 +14,27 @@ export default function Home({navigation}) {
     
     const [description, setDescription] = useState("");
     const [amount, setAmount] = useState(0);
-    const [date, setDate] = useState(new Date().toString());
+    const [date, setDate] = useState('');
+
+
+    useEffect(() => {
+        var today = new Date();
+        var dd = today.getDate();
+
+        var mm = today.getMonth()+1; 
+        var yyyy = today.getFullYear();
+        if(dd<10) 
+        {
+            dd='0'+dd;
+        } 
+
+        if(mm<10) 
+        {
+            mm='0'+mm;
+        } 
+
+        setDate((yyyy + '/' + mm + '/' + dd));
+    }, [])
 
 
     function addTaskEvent(category) {
@@ -22,7 +42,7 @@ export default function Home({navigation}) {
             return;
         }
 
-        addTaskContext(description, amount, category);
+        addTaskContext(description, amount, date, category);
         setModalVisible(!modalVisible)
 
         setDescription('');
@@ -36,7 +56,13 @@ export default function Home({navigation}) {
             <View style={globalStyles.homeContainer1}>
                 <View style={globalStyles.homeContTop}>
                     <Text style={globalStyles.font1}>Balance</Text>
-                    <Text style={globalStyles.font2}>$ 1000</Text>
+                    <Text style={globalStyles.font2}>
+                        $ {(totalIncome - totalExpense) >= 0 ?
+                              totalIncome - totalExpense
+                              :
+                              0
+                          }
+                    </Text>
                 </View>
 
                 <View style={globalStyles.homeContBottom}>
@@ -70,32 +96,23 @@ export default function Home({navigation}) {
                     <ScrollView showsVerticalScrollIndicator={false}>
 
                         {track && track.map((item) => 
-
                             <View style={globalStyles.homeList} key={ item.id }>
-                                <Text style={globalStyles.font5}>{ item.description }</Text>
-                                <View style={{display: 'flex', flexDirection: 'row'}}>
+                                <View>
+                                    <View style={globalStyles.homeListLeft}>
+                                        <Text style={globalStyles.font5}>{ item.description }</Text>
+                                        <Text style={globalStyles.homeListTextLeft}>({item.date})</Text> 
+                                    </View>
                                     <Text style={item.category === "income" ? globalStyles.font6G : globalStyles.font6R}>
-                                        $ { item.amount }
+                                        $ {item.amount} 
                                     </Text>
-                                    <TouchableOpacity activeOpacity={0.5} style={globalStyles.del}
-                                        onPress={() => deleteTaskContext(item.id)}
-                                        >
-                                        <MaterialCommunityIcons name="delete" color={'#a3a3a3'} size={18} />
-                                    </TouchableOpacity>
                                 </View>
+                                <TouchableOpacity activeOpacity={0.5} style={globalStyles.del}
+                                    onPress={() => deleteTaskContext(item.id)}
+                                    >
+                                    <MaterialCommunityIcons name="delete" color={'#a3a3a3'} size={25} />
+                                </TouchableOpacity>
                             </View>
-                        
                         )}
-
-                    {/* <View style={globalStyles.homeList}>
-                        <Text style={globalStyles.font5}>Dividends</Text>
-                        <View style={{display: 'flex', flexDirection: 'row'}}>
-                            <Text style={globalStyles.font6G}>$ 100</Text>
-                            <TouchableOpacity activeOpacity={0.5} style={globalStyles.del}>
-                                <MaterialCommunityIcons name="delete" color={'#a3a3a3'} size={18} />
-                            </TouchableOpacity>
-                        </View>
-                    </View> */}
 
                 </ScrollView>
                 </View>
@@ -114,6 +131,7 @@ export default function Home({navigation}) {
             >
                 <View style={globalStyles.centeredView}>
                     <View style={globalStyles.modalView}>
+
                         <TextInput
                             style={globalStyles.inputBox}
                             variant="outline"
@@ -133,10 +151,10 @@ export default function Home({navigation}) {
                             value = {amount}
                         />
 
-                        {/* <DatePicker
+                        <DatePicker
                             date={date}
                             onChange={(date) => setDate(date)}
-                        /> */}
+                        />
 
                         <View style={globalStyles.modalButtons}>
                             <TouchableOpacity activeOpacity={0.8} style={globalStyles.modalSingleButton}

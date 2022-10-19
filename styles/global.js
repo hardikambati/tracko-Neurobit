@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import { Dimensions } from 'react-native'
 
 export const globalStyles = StyleSheet.create({
 
@@ -43,8 +44,9 @@ export const globalStyles = StyleSheet.create({
         // fontWeight:'bold',
     },
     font5: {
-        fontSize: 13,
-        letterSpacing: 0.5
+        fontSize: 14,
+        letterSpacing: 0.5,
+        fontWeight:'400',
     },
     font6R: {
         fontSize: 13,
@@ -96,6 +98,8 @@ export const globalStyles = StyleSheet.create({
     },
 
     del: {
+        display: 'flex',
+        justifyContent: 'center',
         marginLeft: 10
     },
 
@@ -111,12 +115,10 @@ export const globalStyles = StyleSheet.create({
     },
     homeContainer2: {
         marginTop: 10,
-        height: 400,
+        height: Dimensions.get('window').height*0.5,
         padding: 20,
         borderRadius: 15,
         backgroundColor: '#f7f7f7',
-        // borderWidth: 1,
-        // elevation: 10,
     },
     homeList: {
         marginTop: 10, 
@@ -126,6 +128,17 @@ export const globalStyles = StyleSheet.create({
         backgroundColor: 'white',
         padding: 15,
         borderRadius: 13,
+    },
+    homeListLeft: {
+        display: 'flex',
+        flexDirection: 'row',
+    },
+    homeListTextLeft: {
+        fontSize: 14, 
+        marginLeft: 5,
+        marginBottom: 3,
+        color: '#cfcfcf',
+        letterSpacing: 0.2
     },
     addButtonContainer: {
         padding: 15,
