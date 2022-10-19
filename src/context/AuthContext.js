@@ -7,17 +7,17 @@ export const AuthProvider = ({children}) => {
 
     const [track, setTrack] = React.useState([
         {
-            id: 1, 
-            description: 'Car-Tyre Repair',
+            id:1,
+            description: 'Car Repair',
             amount: 299,
-            date: 'Dec 9',
+            date: 'Oct 15',
             category: 'expense'
         },
         {
             id: 2, 
-            description: 'Stocks',
+            description: 'Stock Dividend',
             amount: 500,
-            date: 'Dec 4',
+            date: 'Oct 10',
             category: 'income'
         }
     ]);
@@ -27,19 +27,21 @@ export const AuthProvider = ({children}) => {
 
     
     function addTaskContext(description, amount, date, category) {
-        const new_id=track.length + 1;
         let new_date = new Date(date);
         new_date = new_date.toString();
         date=new_date.slice(4, 10);
+
+        const new_id = new Date().getTime() + Math.random();
+
         const new_task={
-            id: new_id, 
+            id: new_id,
             description,
             amount,
             date,
             category
         }
 
-        setTrack(oldTrack => [...oldTrack, new_task]);
+        setTrack(oldTrack => [new_task, ...oldTrack]);
     }
 
 

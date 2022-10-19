@@ -44,7 +44,7 @@ export const globalStyles = StyleSheet.create({
         // fontWeight:'bold',
     },
     font5: {
-        fontSize: 14,
+        fontSize: 13,
         letterSpacing: 0.5,
         fontWeight:'400',
     },
@@ -134,7 +134,7 @@ export const globalStyles = StyleSheet.create({
         flexDirection: 'row',
     },
     homeListTextLeft: {
-        fontSize: 14, 
+        fontSize: 13, 
         marginLeft: 5,
         marginBottom: 3,
         color: '#cfcfcf',
@@ -216,5 +216,42 @@ export const globalStyles = StyleSheet.create({
         fontSize: 14,
         fontWeight: 'bold',
         letterSpacing: 0.6,
-    }
+    },
+
+
+
+
+    // PROFILE
+    profileContainer: {
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        marginTop: 80,
+    },
+    profileImage: {
+        height: 200,
+        width: 200,
+        borderRadius: 400,
+        elevation: 20
+    },
+
+    pfont1: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        marginTop: 25, 
+        letterSpacing: 0.5
+    },
+    pfont2: {
+        fontSize: 15,
+        fontWeight: 'bold',
+        marginTop: 5, 
+        letterSpacing: 0.5,
+        color: '#b0b0b0'
+    },
+    pfont3: {
+        fontSize: 15,
+        marginTop: 5, 
+        letterSpacing: 0.5,
+        color: '#b0b0b0'
+    },
 });
