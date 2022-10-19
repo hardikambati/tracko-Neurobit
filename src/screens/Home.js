@@ -143,6 +143,7 @@ export default function Home({navigation}) {
                         />
 
                         <TextInput
+                            keyboardType="numeric"
                             style={globalStyles.inputBox}
                             variant="outline"
                             placeholder="Amount"
