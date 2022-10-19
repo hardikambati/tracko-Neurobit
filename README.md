@@ -15,6 +15,6 @@ Install 'Expo Go' app on your android and scan the QR Code.
 
 ### Screenshots
  
-![1](screenshots/1.jpeg =250x)
-![2](screenshots/2.jpeg =250x)
-![3](screenshots/3.jpeg =250x)
+![1](screenshots/1.jpeg)
+![2](screenshots/2.jpeg)
+![3](screenshots/3.jpeg)
