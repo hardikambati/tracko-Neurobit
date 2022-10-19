@@ -8,12 +8,12 @@ import { AuthContext } from '../context/AuthContext';
 
 export default function Home({navigation}) {
 
-    const { track, addTaskContext, deleteTaskContext } = React.useContext(AuthContext);
+    const { track, addTaskContext, deleteTaskContext, totalIncome, totalExpense } = React.useContext(AuthContext);
 
     const [modalVisible, setModalVisible] = useState(false);
     
     const [description, setDescription] = useState("");
-    const [amount, setAmount] = useState('');
+    const [amount, setAmount] = useState(0);
     const [date, setDate] = useState(new Date().toString());
 
 
@@ -26,7 +26,7 @@ export default function Home({navigation}) {
         setModalVisible(!modalVisible)
 
         setDescription('');
-        setAmount('0');
+        setAmount(0);
     }
 
 
@@ -47,7 +47,7 @@ export default function Home({navigation}) {
                         />
                         <View>
                             <Text style={globalStyles.font3}>Income</Text>
-                            <Text style={globalStyles.font4G}>$ 3000</Text>
+                            <Text style={globalStyles.font4G}>$ {totalIncome}</Text>
                         </View>
                     </View>
 
@@ -58,7 +58,7 @@ export default function Home({navigation}) {
                         />
                         <View>
                             <Text style={globalStyles.font3}>Expenses</Text>
-                            <Text style={globalStyles.font4R}>$ 2000</Text>
+                            <Text style={globalStyles.font4R}>$ {totalExpense}</Text>
                         </View>
                     </View>
                 </View>

@@ -1,4 +1,4 @@
-import React, { createContext } from "react";
+import React, { createContext, useState } from "react";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from "axios";
 
@@ -24,9 +24,8 @@ export const AuthProvider = ({children}) => {
         }
     ]);
 
-    
-    React.useEffect(() => {
-    }, [])
+    const [totalIncome, setIncome] = useState(0);
+    const [totalExpense, setExpense] = useState(0);
 
     
     function addTaskContext(description, amount, category) {
@@ -49,12 +48,35 @@ export const AuthProvider = ({children}) => {
     }
 
 
+    function calculateStats() {
+        let income_cal=0;
+        let expense_cal=0;
+        track.map((item) => {
+            if(item.category === 'income') {
+                income_cal += parseFloat(item.amount);
+            } else if(item.category === 'expense') {
+                expense_cal += parseFloat(item.amount);
+            }
+        })
+
+        setIncome(income_cal);
+        setExpense(expense_cal);
+    }
+
+
+    React.useEffect(() => {
+        calculateStats();
+    }, [track])
+
+
     return (
         <AuthContext.Provider
             value={{
                 track,
                 addTaskContext,
                 deleteTaskContext, 
+                totalIncome,
+                totalExpense,
             }}
         >
             {children}
